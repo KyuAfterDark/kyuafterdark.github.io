@@ -3,410 +3,434 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Official TimmyAndKyu hub with all our main links, updates, and social profiles including X, Instagram, Telegram, and more." />
+
+    <!-- Kyu After Dark: Solo hub metadata -->
+    <meta
+      name="description"
+      content="Kyu After Dark — main links, updates, socials, and after-hours content."
+    />
     <meta name="theme-color" content="#050505" />
-    <meta property="og:title" content="TimmyAndKyu Hub" />
-    <meta property="og:description" content="Official TimmyAndKyu hub with our main links and updates." />
-    <meta property="og:url" content="https://timmyandkyu.github.io/" />
+
+    <meta property="og:title" content="Kyu After Dark" />
+    <meta
+      property="og:description"
+      content="🌙 Night shift. Darker mood. Same Kyu. 🖤"
+    />
+    <meta property="og:url" content="https://YOUR_NEW_DOMAIN_OR_GITHUB_URL/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/timmyandkyu/timmyandkyu.github.io/main/Who_we_are.png" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+    />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="TimmyAndKyu Hub" />
-    <meta name="twitter:description" content="Official TimmyAndKyu hub with our main links and updates." />
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/timmyandkyu/timmyandkyu.github.io/main/Who_we_are.png" />
-    <link rel="canonical" href="https://timmyandkyu.github.io/" />
-    
-      <title>TimmyAndKyu Hub | Official Links, X, Instagram, Telegram</title>
+    <meta name="twitter:title" content="Kyu After Dark" />
+    <meta
+      name="twitter:description"
+      content="🌙 Night shift. Darker mood. Same Kyu. 🖤"
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+    />
 
-      <link
-        rel="icon"
-        type="image/png"
-        href="https://raw.githubusercontent.com/timmyandkyu/timmyandkyu.github.io/main/Who_we_are.png"
-      />
+    <link rel="canonical" href="https://YOUR_NEW_DOMAIN_OR_GITHUB_URL/" />
 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02Y2MPX8D"></script>
-      
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        
-        function gtag() {
-          dataLayer.push(arguments);
-        }
+    <title>Kyu After Dark | Night Shift Links</title>
 
-        gtag('js', new Date());
-        gtag('config', 'G-Z02Y2MPX8D');
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+    />
 
-        function trackClick(linkName, linkUrl) {
-          gtag('event', 'outbound_click', {
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02Y2MPX8D"></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag("js", new Date());
+      gtag("config", "G-Z02Y2MPX8D");
+
+      function trackClick(linkName, linkUrl) {
+        gtag("event", "outbound_click", {
+          brand: "kyu_after_dark",
           link_name: linkName,
           link_url: linkUrl
-          });
-        }
-      </script>
+        });
+      }
+    </script>
 
-      <style>
-        * {
-          box-sizing: border-box;
-        }
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-        html {
-          -webkit-text-size-adjust: 100%;
-        }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
 
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(120, 42, 255, 0.18) 0%, rgba(120, 42, 255, 0.05) 28%, transparent 52%),
+          radial-gradient(circle at 50% 100%, rgba(225, 48, 108, 0.16) 0%, rgba(225, 48, 108, 0.05) 30%, transparent 56%),
+          #050505;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        overflow-x: hidden;
+        padding: 20px 0;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 38px 38px;
+        mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(circle at top center, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 14%, transparent 38%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 430px;
+        padding: 24px;
+      }
+
+      .card {
+        background: rgba(14, 14, 18, 0.86);
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 28px;
+        padding: 30px 22px 24px;
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+          0 12px 42px rgba(0, 0, 0, 0.48),
+          0 0 54px rgba(156, 66, 255, 0.10),
+          0 0 34px rgba(225, 48, 108, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .profile {
+        width: 124px;
+        height: 124px;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+        margin: 0 auto 18px;
+        border: 2px solid rgba(255, 255, 255, 0.13);
+        box-shadow:
+          0 0 0 4px rgba(255, 255, 255, 0.03),
+          0 0 30px rgba(156, 66, 255, 0.16),
+          0 0 20px rgba(225, 48, 108, 0.10);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: 39px;
+        line-height: 1.04;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+
+      .bio {
+        margin: 0 auto 8px;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .trust {
+        margin: 0 auto 22px;
+        color: rgba(255, 255, 255, 0.46);
+        font-size: 13px;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      .btn {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 58px;
+        padding: 17px 18px;
+        border-radius: 18px;
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: 0.01em;
+        color: white;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+          0 8px 22px rgba(0, 0, 0, 0.35);
+        transition:
+          transform 0.18s ease,
+          opacity 0.18s ease,
+          box-shadow 0.22s ease,
+          border-color 0.22s ease,
+          background 0.22s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px) scale(1.015);
+        opacity: 1;
+      }
+
+      .btn:active {
+        transform: scale(0.985);
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.95);
+        outline-offset: 3px;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -110%;
+        width: 42%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.30),
+          transparent
+        );
+        transform: skewX(-20deg);
+      }
+
+      .btn:hover::before {
+        left: 125%;
+        transition: left 0.7s ease;
+      }
+
+      .btnText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1.1;
+      }
+
+      .btnTitle {
+        font-size: 17px;
+        font-weight: 850;
+      }
+
+      .btnSub {
+        margin-top: 4px;
+        font-size: 11px;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+        opacity: 0.76;
+        text-transform: uppercase;
+      }
+
+      .afterDark {
+        background: linear-gradient(135deg, #ff8c00, #ff4f00);
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+          0 0 32px rgba(255, 140, 0, 0.42),
+          0 10px 24px rgba(0, 0, 0, 0.34);
+      }
+
+      .afterDark:hover {
+        transform: translateY(-1px) scale(1.03);
+      }
+
+      .instagram {
+        background: linear-gradient(135deg, #e1306c, #8f1d7a);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+          0 0 24px rgba(225, 48, 108, 0.22),
+          0 10px 24px rgba(0, 0, 0, 0.30);
+      }
+
+      .twitter {
+        background: linear-gradient(135deg, #2a2a2a, #111111);
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+          0 10px 24px rgba(0, 0, 0, 0.34);
+      }
+
+      .twitter:hover {
+        background: linear-gradient(135deg, #343434, #1d1d1d);
+        border-color: rgba(255, 255, 255, 0.34);
+      }
+
+      .telegram {
+        background: linear-gradient(135deg, #4f6f8d, #2f3d4b);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+          0 10px 24px rgba(0, 0, 0, 0.30);
+      }
+
+      .telegram:hover {
+        background: linear-gradient(135deg, #5b7d9d, #384858);
+        border-color: rgba(255, 255, 255, 0.30);
+      }
+
+      .footer {
+        font-size: 12px;
+        opacity: 0.48;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 480px) {
         body {
-          margin: 0;
-          min-height: 100vh;
-          font-family: Arial, sans-serif;
-          background: #050505;
-          color: white;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          position: relative;
-          overflow-x: hidden;
-          padding: 20px 0;
-        }
-
-        body::before {
-          content: "";
-          position: fixed;
-          inset: 0;
-          background:
-            radial-gradient(circle at center, rgba(225, 48, 108, 0.18) 0%, rgba(225, 48, 108, 0.08) 20%, rgba(0, 0, 0, 0) 48%);
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        body::after {
-          content: "";
-          position: fixed;
-          inset: 0;
-          background:
-            radial-gradient(circle at top center, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 12%, rgba(0, 0, 0, 0) 35%);
-          pointer-events: none;
-          z-index: 0;
+          align-items: flex-start;
         }
 
         .wrap {
-          position: relative;
-          z-index: 1;
-          width: 100%;
-          max-width: 430px;
-          padding: 24px;
+          padding: 16px;
         }
 
         .card {
-          background: rgba(20, 20, 20, 0.82);
-          border: 1px solid rgba(255, 255, 255, 0.10);
-          border-radius: 28px;
-          padding: 30px 22px 24px;
-          box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-            0 12px 40px rgba(0, 0, 0, 0.45),
-            0 0 50px rgba(225, 48, 108, 0.08);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-        }
-
-        .profile {
-          width: 124px;
-          height: 124px;
-          object-fit: cover;
-          border-radius: 50%;
-          display: block;
-          margin: 0 auto 18px;
-          border: 2px solid rgba(255, 255, 255, 0.12);
-          box-shadow:
-            0 0 0 4px rgba(255, 255, 255, 0.03),
-            0 0 28px rgba(255, 255, 255, 0.08);
+          padding: 26px 18px 20px;
+          border-radius: 24px;
         }
 
         h1 {
-          margin: 0 0 10px;
-          font-size: 40px;
-          line-height: 1.05;
-          font-weight: 800;
-          letter-spacing: -0.02em;
+          font-size: 34px;
         }
 
         .bio {
-          color: rgba(255, 255, 255, 0.68);
-        }
-
-        .trust {
-          color: rgba(255, 255, 255, 0.45);
-        }
-
-        .links {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          width: 100%;
-          max-width: 340px;
-          margin: 0 auto;
+          font-size: 15px;
         }
 
         .btn {
-          position: relative;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          width: 100%;
-          min-height: 58px;
-          padding: 17px 18px;
-          border-radius: 18px;
-          text-decoration: none;
-          font-size: 17px;
-          font-weight: 800;
-          line-height: 1.2;
-          letter-spacing: 0.01em;
-          color: white;
-          text-align: center;
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-            0 8px 22px rgba(0, 0, 0, 0.35);
-          transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+          min-height: 60px;
+          font-size: 16px;
+          padding: 16px;
+          border-radius: 16px;
         }
 
-        .btn:hover {
-          transform: translateY(-1px) scale(1.015);
-          opacity: 1;
+        .links {
+          gap: 12px;
         }
-
-        .btn:active {
-          transform: scale(0.985);
-        }
-
-        .btn:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.95);
-          outline-offset: 3px;
-        }
-
-        .btn::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -110%;
-          width: 42%;
-          height: 100%;
-          background: linear-gradient(
-            120deg,
-            transparent,
-            rgba(255, 255, 255, 0.30),
-            transparent
-          );
-          transform: skewX(-20deg);
-        }
-        
-        .btnText {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          line-height: 1.1;
-          }
-
-        .btnTitle {
-          font-size: 17px;
-          font-weight: 800;
-        }
-
-        .btnSub {
-          margin-top: 4px;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.04em;
-          opacity: 0.78;
-        }
-        
-        .btn:hover::before {
-          left: 125%;
-          transition: left 0.7s ease;
-        }
-
-        .xHamster {
-          background: linear-gradient(135deg, #ff8c00, #ff5e00);
-          border: 1px solid rgba(255, 255, 255, 0.22);
-          box-shadow: 
-          0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-          0 0 30px rgba(255, 140, 0, 0.45),
-          0 10px 24px rgba(0, 0, 0, 0.32);
-        }
-
-        .xHamster:hover {
-          transform: translateY(-1px) scale(1.03);
-        }
-
-        .instagram {
-          background: linear-gradient(135deg, #e1306c, #c81e5d);
-          border: 1px solid rgba(255, 255, 255, 0.20);
-          color: white;
-          box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-            0 0 22px rgba(225, 48, 108, 0.24),
-            0 10px 24px rgba(0, 0, 0, 0.30);
-        }
-
-        .twitter {
-          background: linear-gradient(135deg, #2a2a2a, #171717);
-          border: 1px solid rgba(255, 255, 255, 0.24);
-          color: white;
-          box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-            0 10px 24px rgba(0, 0, 0, 0.34);
-        }
-
-        .twitter:hover {
-          background: linear-gradient(135deg, #343434, #1d1d1d);
-          border-color: rgba(255, 255, 255, 0.34);
-        }
-
-        .telegram {
-          background: linear-gradient(135deg, #4f6f8d, #2f3d4b);
-          border: 1px solid rgba(255, 255, 255, 0.22);
-          color: white;
-          box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-            0 10px 24px rgba(0, 0, 0, 0.30);
-        }
-        
-        @keyframes pulse {
-          
-          0% {
-          box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-          0 0 18px rgba(0, 175, 240, 0.28),
-          0 10px 24px rgba(0, 0, 0, 0.32);
-          }
-          
-          50% {
-            box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-            0 0 34px rgba(0, 175, 240, 0.52),
-            0 10px 24px rgba(0, 0, 0, 0.32);
-          }
-          
-          100% {
-            box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-            0 0 18px rgba(0, 175, 240, 0.28),
-            0 10px 24px rgba(0, 0, 0, 0.32);
-          }
-          
-        }
-        
-        .telegram:hover {
-          background: linear-gradient(135deg, #5b7d9d, #384858);
-          border-color: rgba(255, 255, 255, 0.30);
-        }
-        
-        .footer {
-          font-size: 12px;
-          opacity: 0.5;
-          margin-top: 20px;
-        }
-        
-        @media (max-width: 480px) {
-          body {
-            align-items: flex-start;
-          }
-
-          .wrap {
-             padding: 16px;
-          }
-
-          .card {
-            padding: 26px 18px 20px;
-            border-radius: 24px;
-          }
-
-          h1 {
-            font-size: 34px;
-          }
-
-          .bio {
-            font-size: 15px;
-          }
-
-          .btn {
-            min-height: 60px;
-            font-size: 16px;
-            padding: 16px;
-            border-radius: 16px;
-          }
-
-          .links {
-            gap: 12px;
-          }
-        }
-      </style>
+      }
+    </style>
   </head>
+
   <body>
     <main class="wrap">
-      <section class="card"> 
+      <section class="card">
         <img
           class="profile"
-          src="https://raw.githubusercontent.com/timmyandkyu/timmyandkyu.github.io/main/Who_we_are.png"
-          alt="TimmyAndKyu profile picture"
-          />
+          src="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+          alt="Kyu After Dark profile picture"
+        />
 
-            <h1>TimmyAndKyu</h1>
+        <h1>Kyu After Dark</h1>
 
-            <p class="bio">👀 twinks • a little more than just friends • spicy</p>
-            <p class="trust">updated every few days</p>
+        <p class="bio">🌙 Night shift. Darker mood. Same Kyu. 🖤</p>
+        <p class="trust">after work • after hours • after dark</p>
 
-          <div class="links">
-            <a
-              href="https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS"
-              class="btn xHamster"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open xHamster"
-              onclick="trackClick('xhamster', 'https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS')"
-              >
-              <span class="btnText">
-               <span class="btnTitle">Watch cute hamsters here ✨</span>
-                <span class="btnSub">xHamster</span>
-               </span>
-            </a>
+        <div class="links">
+          <!-- Replace placeholder URLs with your new solo profile links before publishing. -->
+          <a
+            href="https://xhamster.com/users/YOUR_NEW_HANDLE"
+            class="btn afterDark"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open main after-dark profile"
+            onclick="trackClick('main_after_dark', 'https://xhamster.com/users/YOUR_NEW_HANDLE')"
+          >
+            <span class="btnText">
+              <span class="btnTitle">Watch me after dark 😈</span>
+              <span class="btnSub">main profile</span>
+            </span>
+          </a>
 
-            <a
-              href="https://www.instagram.com/timmyandkyu.official/"
-              class="btn instagram"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Instagram"
-              onclick="trackClick('instagram', 'https://www.instagram.com/timmyandkyu.official/')"
-            >
-              Instagram
-            </a>
-            
-            <a
-              href="https://x.com/TimmyAndKyu"
-              class="btn twitter"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open X"
-              onclick="trackClick('x', 'https://x.com/TimmyAndKyu')"
-            >
-              X / Twitter
-            </a>
-            
-            <a
-              href="https://t.me/TimmyAndKyu"
-              class="btn telegram"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Telegram"
-              onclick="trackClick('telegram', 'https://t.me/TimmyAndKyu')"
-            >
-              Telegram
-            </a>
-          </div>
-        <p class="footer">TimmyAndKyu Hub</p>
+          <a
+            href="https://www.instagram.com/YOUR_NEW_HANDLE/"
+            class="btn instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Instagram"
+            onclick="trackClick('instagram', 'https://www.instagram.com/YOUR_NEW_HANDLE/')"
+          >
+            <span class="btnText">
+              <span class="btnTitle">Instagram 🌙</span>
+              <span class="btnSub">daily mood</span>
+            </span>
+          </a>
+
+          <a
+            href="https://x.com/YOUR_NEW_HANDLE"
+            class="btn twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open X"
+            onclick="trackClick('x', 'https://x.com/YOUR_NEW_HANDLE')"
+          >
+            <span class="btnText">
+              <span class="btnTitle">X / Twitter 🖤</span>
+              <span class="btnSub">updates & teasers</span>
+            </span>
+          </a>
+
+          <a
+            href="https://t.me/YOUR_NEW_HANDLE"
+            class="btn telegram"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Telegram"
+            onclick="trackClick('telegram', 'https://t.me/YOUR_NEW_HANDLE')"
+          >
+            <span class="btnText">
+              <span class="btnTitle">Telegram 🔒</span>
+              <span class="btnSub">closer updates</span>
+            </span>
+          </a>
+        </div>
+
+        <p class="footer">Kyu After Dark Hub</p>
       </section>
     </main>
   </body>
