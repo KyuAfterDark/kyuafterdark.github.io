@@ -4,44 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Kyu After Dark: Solo hub metadata -->
+    <!-- Kyu Crush: bright pop hub metadata -->
     <meta
       name="description"
-      content="Kyu After Dark — main links, updates, socials, and after-hours content."
+      content="Kyu Crush — main links, daily glow, teasers, socials, and closer updates."
     />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#fff3d6" />
 
-    <meta property="og:title" content="Kyu After Dark" />
+    <meta property="og:title" content="Kyu Crush" />
     <meta
       property="og:description"
-      content="🌙 Night shift. Darker mood. Same Kyu. 🖤"
+      content="🍒 Sweet looks. Loud energy. Good trouble."
     />
-    <meta property="og:url" content="https://YOUR_NEW_DOMAIN_OR_GITHUB_URL/" />
+    <meta property="og:url" content="https://kyuafterdark.github.io/" />
     <meta property="og:type" content="website" />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-crush.png"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Kyu After Dark" />
+    <meta name="twitter:title" content="Kyu Crush" />
     <meta
       name="twitter:description"
-      content="🌙 Night shift. Darker mood. Same Kyu. 🖤"
+      content="🍒 Sweet looks. Loud energy. Good trouble."
     />
     <meta
       name="twitter:image"
-      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+      content="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-crush.png"
     />
 
-    <link rel="canonical" href="https://YOUR_NEW_DOMAIN_OR_GITHUB_URL/" />
+    <link rel="canonical" href="https://kyuafterdark.github.io/" />
 
-    <title>Kyu After Dark | Night Shift Links</title>
+    <title>Kyu Crush | Sweet Links</title>
 
     <link
       rel="icon"
       type="image/png"
-      href="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
+      href="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-crush.png"
     />
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02Y2MPX8D"></script>
@@ -58,7 +58,7 @@
 
       function trackClick(linkName, linkUrl) {
         gtag("event", "outbound_click", {
-          brand: "kyu_after_dark",
+          brand: "kyu_crush",
           link_name: linkName,
           link_url: linkUrl
         });
@@ -74,15 +74,30 @@
         -webkit-text-size-adjust: 100%;
       }
 
+      :root {
+        --cream: #fff3d6;
+        --vanilla: #ffe8a3;
+        --peach: #ff9f7a;
+        --bubblegum: #ff4fa3;
+        --cherry: #ff3b5f;
+        --sky: #72c7ff;
+        --mint: #8ff0c6;
+        --choco: #3a2418;
+        --white: #fffaf0;
+        --soft-shadow: rgba(58, 36, 24, 0.16);
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         background:
-          radial-gradient(circle at 50% 0%, rgba(120, 42, 255, 0.18) 0%, rgba(120, 42, 255, 0.05) 28%, transparent 52%),
-          radial-gradient(circle at 50% 100%, rgba(225, 48, 108, 0.16) 0%, rgba(225, 48, 108, 0.05) 30%, transparent 56%),
-          #050505;
-        color: white;
+          radial-gradient(circle at 18% 10%, rgba(255, 232, 163, 0.95) 0%, transparent 27%),
+          radial-gradient(circle at 88% 15%, rgba(255, 79, 163, 0.48) 0%, transparent 29%),
+          radial-gradient(circle at 12% 82%, rgba(143, 240, 198, 0.52) 0%, transparent 32%),
+          radial-gradient(circle at 80% 92%, rgba(114, 199, 255, 0.56) 0%, transparent 36%),
+          linear-gradient(135deg, #fff3d6 0%, #ffd6e8 48%, #bde9ff 100%);
+        color: var(--choco);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -97,10 +112,9 @@
         position: fixed;
         inset: 0;
         background:
-          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-        background-size: 38px 38px;
-        mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+          radial-gradient(circle, rgba(255, 255, 255, 0.60) 2px, transparent 3px);
+        background-size: 34px 34px;
+        opacity: 0.42;
         pointer-events: none;
         z-index: 0;
       }
@@ -108,9 +122,13 @@
       body::after {
         content: "";
         position: fixed;
-        inset: 0;
+        width: 360px;
+        height: 360px;
+        right: -120px;
+        top: -120px;
+        border-radius: 50%;
         background:
-          radial-gradient(circle at top center, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 14%, transparent 38%);
+          radial-gradient(circle, rgba(255, 79, 163, 0.24) 0%, transparent 65%);
         pointer-events: none;
         z-index: 0;
       }
@@ -124,17 +142,16 @@
       }
 
       .card {
-        background: rgba(14, 14, 18, 0.86);
-        border: 1px solid rgba(255, 255, 255, 0.11);
-        border-radius: 28px;
+        background: rgba(255, 250, 240, 0.86);
+        border: 2px solid rgba(255, 255, 255, 0.76);
+        border-radius: 30px;
         padding: 30px 22px 24px;
         box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-          0 12px 42px rgba(0, 0, 0, 0.48),
-          0 0 54px rgba(156, 66, 255, 0.10),
-          0 0 34px rgba(225, 48, 108, 0.08);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+          0 0 0 1px rgba(255, 255, 255, 0.46) inset,
+          0 18px 44px rgba(255, 79, 163, 0.18),
+          0 12px 30px rgba(58, 36, 24, 0.12);
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(13px);
       }
 
       .profile {
@@ -144,32 +161,38 @@
         border-radius: 50%;
         display: block;
         margin: 0 auto 18px;
-        border: 2px solid rgba(255, 255, 255, 0.13);
+        border: 4px solid var(--white);
         box-shadow:
-          0 0 0 4px rgba(255, 255, 255, 0.03),
-          0 0 30px rgba(156, 66, 255, 0.16),
-          0 0 20px rgba(225, 48, 108, 0.10);
+          0 0 0 5px rgba(255, 79, 163, 0.16),
+          0 0 0 10px rgba(255, 232, 163, 0.30),
+          0 14px 28px rgba(58, 36, 24, 0.18);
       }
 
       h1 {
         margin: 0 0 10px;
-        font-size: 39px;
-        line-height: 1.04;
+        font-size: 42px;
+        line-height: 1.02;
         font-weight: 900;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.055em;
+        color: var(--choco);
+        text-shadow:
+          2px 3px 0 rgba(255, 232, 163, 0.92),
+          -1px -1px 0 rgba(255, 255, 255, 0.85);
       }
 
       .bio {
         margin: 0 auto 8px;
-        color: rgba(255, 255, 255, 0.74);
+        color: rgba(58, 36, 24, 0.78);
         font-size: 15px;
         line-height: 1.45;
+        font-weight: 700;
       }
 
       .trust {
         margin: 0 auto 22px;
-        color: rgba(255, 255, 255, 0.46);
+        color: rgba(58, 36, 24, 0.54);
         font-size: 13px;
+        font-weight: 700;
       }
 
       .links {
@@ -191,18 +214,18 @@
         width: 100%;
         min-height: 58px;
         padding: 17px 18px;
-        border-radius: 18px;
+        border-radius: 20px;
         text-decoration: none;
         font-size: 17px;
-        font-weight: 800;
+        font-weight: 900;
         line-height: 1.2;
         letter-spacing: 0.01em;
         color: white;
         text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        border: 2px solid rgba(255, 255, 255, 0.58);
         box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-          0 8px 22px rgba(0, 0, 0, 0.35);
+          0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+          0 10px 22px rgba(58, 36, 24, 0.16);
         transition:
           transform 0.18s ease,
           opacity 0.18s ease,
@@ -212,8 +235,11 @@
       }
 
       .btn:hover {
-        transform: translateY(-1px) scale(1.015);
+        transform: translateY(-2px) scale(1.018);
         opacity: 1;
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.22) inset,
+          0 14px 26px rgba(58, 36, 24, 0.19);
       }
 
       .btn:active {
@@ -221,7 +247,7 @@
       }
 
       .btn:focus-visible {
-        outline: 2px solid rgba(255, 255, 255, 0.95);
+        outline: 3px solid rgba(58, 36, 24, 0.90);
         outline-offset: 3px;
       }
 
@@ -235,7 +261,7 @@
         background: linear-gradient(
           120deg,
           transparent,
-          rgba(255, 255, 255, 0.30),
+          rgba(255, 255, 255, 0.42),
           transparent
         );
         transform: skewX(-20deg);
@@ -255,69 +281,47 @@
 
       .btnTitle {
         font-size: 17px;
-        font-weight: 850;
+        font-weight: 900;
       }
 
       .btnSub {
         margin-top: 4px;
         font-size: 11px;
-        font-weight: 650;
-        letter-spacing: 0.06em;
-        opacity: 0.76;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        opacity: 0.78;
         text-transform: uppercase;
       }
 
-      .afterDark {
-        background: linear-gradient(135deg, #ff8c00, #ff4f00);
-        border: 1px solid rgba(255, 255, 255, 0.24);
+      .mainProfile {
+        background: linear-gradient(135deg, #ff4fa3, #ff3b5f);
         box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-          0 0 32px rgba(255, 140, 0, 0.42),
-          0 10px 24px rgba(0, 0, 0, 0.34);
+          0 0 0 1px rgba(255, 255, 255, 0.16) inset,
+          0 0 30px rgba(255, 79, 163, 0.28),
+          0 12px 24px rgba(58, 36, 24, 0.18);
       }
 
-      .afterDark:hover {
-        transform: translateY(-1px) scale(1.03);
+      .mainProfile:hover {
+        transform: translateY(-2px) scale(1.03);
       }
 
       .instagram {
-        background: linear-gradient(135deg, #e1306c, #8f1d7a);
-        border: 1px solid rgba(255, 255, 255, 0.20);
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-          0 0 24px rgba(225, 48, 108, 0.22),
-          0 10px 24px rgba(0, 0, 0, 0.30);
+        background: linear-gradient(135deg, #ff9f7a, #ff4fa3);
       }
 
       .twitter {
-        background: linear-gradient(135deg, #2a2a2a, #111111);
-        border: 1px solid rgba(255, 255, 255, 0.24);
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-          0 10px 24px rgba(0, 0, 0, 0.34);
-      }
-
-      .twitter:hover {
-        background: linear-gradient(135deg, #343434, #1d1d1d);
-        border-color: rgba(255, 255, 255, 0.34);
+        background: linear-gradient(135deg, #3a2418, #7a4a2a);
       }
 
       .telegram {
-        background: linear-gradient(135deg, #4f6f8d, #2f3d4b);
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-          0 10px 24px rgba(0, 0, 0, 0.30);
-      }
-
-      .telegram:hover {
-        background: linear-gradient(135deg, #5b7d9d, #384858);
-        border-color: rgba(255, 255, 255, 0.30);
+        background: linear-gradient(135deg, #72c7ff, #8ff0c6);
+        color: var(--choco);
       }
 
       .footer {
         font-size: 12px;
-        opacity: 0.48;
+        font-weight: 800;
+        color: rgba(58, 36, 24, 0.46);
         margin-top: 20px;
       }
 
@@ -332,11 +336,11 @@
 
         .card {
           padding: 26px 18px 20px;
-          border-radius: 24px;
+          border-radius: 26px;
         }
 
         h1 {
-          font-size: 34px;
+          font-size: 36px;
         }
 
         .bio {
@@ -347,7 +351,7 @@
           min-height: 60px;
           font-size: 16px;
           padding: 16px;
-          border-radius: 16px;
+          border-radius: 18px;
         }
 
         .links {
@@ -362,27 +366,27 @@
       <section class="card">
         <img
           class="profile"
-          src="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-after-dark.png"
-          alt="Kyu After Dark profile picture"
+          src="https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/kyu-crush.png"
+          alt="Kyu Crush profile picture"
         />
 
-        <h1>Kyu After Dark</h1>
+        <h1>Kyu Crush</h1>
 
-        <p class="bio">🌙 Night shift. Darker mood. Same Kyu. 🖤</p>
-        <p class="trust">after work • after hours • after dark</p>
+        <p class="bio">🍒 Sweet looks. Loud energy. Good trouble.</p>
+        <p class="trust">daily glow • cute chaos • crush mode</p>
 
         <div class="links">
-          <!-- Replace placeholder URLs with your new solo profile links before publishing. -->
+          <!-- Replace placeholder URLs with your real profile links before publishing. -->
           <a
             href="https://xhamster.com/users/YOUR_NEW_HANDLE"
-            class="btn afterDark"
+            class="btn mainProfile"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open main after-dark profile"
-            onclick="trackClick('main_after_dark', 'https://xhamster.com/users/YOUR_NEW_HANDLE')"
+            aria-label="Open main Kyu Crush profile"
+            onclick="trackClick('main_profile', 'https://xhamster.com/users/YOUR_NEW_HANDLE')"
           >
             <span class="btnText">
-              <span class="btnTitle">Watch me after dark 😈</span>
+              <span class="btnTitle">Watch Kyu Crush 🍒</span>
               <span class="btnSub">main profile</span>
             </span>
           </a>
@@ -396,8 +400,8 @@
             onclick="trackClick('instagram', 'https://www.instagram.com/YOUR_NEW_HANDLE/')"
           >
             <span class="btnText">
-              <span class="btnTitle">Instagram 🌙</span>
-              <span class="btnSub">daily mood</span>
+              <span class="btnTitle">Instagram ☀️</span>
+              <span class="btnSub">daily glow</span>
             </span>
           </a>
 
@@ -410,8 +414,8 @@
             onclick="trackClick('x', 'https://x.com/YOUR_NEW_HANDLE')"
           >
             <span class="btnText">
-              <span class="btnTitle">X / Twitter 🖤</span>
-              <span class="btnSub">updates & teasers</span>
+              <span class="btnTitle">X / Twitter 💬</span>
+              <span class="btnSub">teasers & updates</span>
             </span>
           </a>
 
@@ -430,7 +434,7 @@
           </a>
         </div>
 
-        <p class="footer">Kyu After Dark Hub</p>
+        <p class="footer">Kyu Crush Hub</p>
       </section>
     </main>
   </body>
