@@ -334,8 +334,8 @@
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 14px 0 44px;
-        margin: -14px 0 -36px;
+        padding: 6px 0 18px;
+        margin: -6px 0 0;
         background: transparent;
         border: 0;
         box-shadow: none;
@@ -349,12 +349,13 @@
         display: flex;
         align-items: stretch;
         gap: 14px;
-        padding: 0 0 6px;
+        padding: 0;
         background: transparent;
       }
 
       .panel {
         flex: 0 0 calc(100% - 42px);
+        min-width: 0;
         scroll-snap-align: start;
       }
 
@@ -366,8 +367,8 @@
         padding: 42px 22px 24px;
         box-shadow:
           0 0 0 1px rgba(255, 255, 255, 0.46) inset,
-          0 18px 44px rgba(255, 79, 163, 0.16),
-          0 12px 30px rgba(58, 36, 24, 0.11);
+          inset 0 18px 42px rgba(255, 255, 255, 0.26),
+          inset 0 -24px 44px rgba(255, 79, 163, 0.045);
         backdrop-filter: blur(13px);
         -webkit-backdrop-filter: blur(13px);
       }
@@ -740,9 +741,8 @@
         border: 1px solid rgba(255, 255, 255, 0.11);
         box-shadow:
           0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-          0 12px 42px rgba(0, 0, 0, 0.48),
-          0 0 54px rgba(156, 66, 255, 0.10),
-          0 0 34px rgba(225, 48, 108, 0.08);
+          inset 0 18px 42px rgba(255, 255, 255, 0.025),
+          inset 0 -28px 56px rgba(156, 66, 255, 0.06);
       }
 
       html[data-theme="dark"] .mainCard::after {
@@ -881,8 +881,8 @@
         }
 
         .swipeShell {
-          padding: 14px 0 42px;
-          margin: -14px 0 -34px;
+          padding: 6px 0 18px;
+          margin: -6px 0 0;
         }
 
         .panel {
