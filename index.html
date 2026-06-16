@@ -7,15 +7,12 @@
     <!-- Kyu Crush: bright pop hub metadata -->
     <meta
       name="description"
-      content="Kyu Crush — main links, daily glow, teasers, socials, and closer updates."
+      content="Kyu Crush — main links, daily glow, teasers, socials, secret snaps, and closer updates."
     />
     <meta id="themeColorMeta" name="theme-color" content="#fff3d6" />
 
     <meta property="og:title" content="Kyu Crush" />
-    <meta
-      property="og:description"
-      content="🍒 Your daily little crush."
-    />
+    <meta property="og:description" content="🍒 Your daily little crush." />
     <meta property="og:url" content="https://kyu-crush.github.io/" />
     <meta property="og:type" content="website" />
     <meta
@@ -25,10 +22,7 @@
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kyu Crush" />
-    <meta
-      name="twitter:description"
-      content="🍒 Your daily little crush."
-    />
+    <meta name="twitter:description" content="🍒 Your daily little crush." />
     <meta
       name="twitter:image"
       content="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/Kyu.png"
@@ -52,6 +46,65 @@
           "https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/darkpic.png"
       };
 
+      const baseLinks = {
+        featuredVideo:
+          "https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS",
+        instagram: "https://www.instagram.com/kyu_crush/",
+        x: "https://x.com/kyu_crush",
+        telegram: "https://t.me/kyu_crush",
+        snapchat:
+          "https://www.snapchat.com/add/kyuxtx?share_id=HX8_dVJONOk&locale=en-GB"
+      };
+
+      const linkTracking = {
+        featuredVideo: {
+          name: "featured_video",
+          medium: "featured_button",
+          campaign: "featured_video",
+          content: "watch_kyu_crush"
+        },
+        instagram: {
+          name: "instagram",
+          medium: "social_button",
+          campaign: "instagram_daily_glow",
+          content: "main_links"
+        },
+        x: {
+          name: "x",
+          medium: "social_button",
+          campaign: "x_teasers_updates",
+          content: "main_links"
+        },
+        telegram: {
+          name: "telegram",
+          medium: "social_button",
+          campaign: "telegram_private_updates",
+          content: "main_links"
+        },
+        snapchat: {
+          name: "snapchat",
+          medium: "secret_swipe_button",
+          campaign: "snapchat_secret_area",
+          content: "hidden_panel"
+        }
+      };
+
+      function buildTrackedUrl(key) {
+        const baseUrl = baseLinks[key];
+        const tracking = linkTracking[key];
+
+        if (!baseUrl || !tracking) return "#";
+
+        const url = new URL(baseUrl);
+
+        url.searchParams.set("utm_source", "kyu_crush_hub");
+        url.searchParams.set("utm_medium", tracking.medium);
+        url.searchParams.set("utm_campaign", tracking.campaign);
+        url.searchParams.set("utm_content", tracking.content);
+
+        return url.toString();
+      }
+
       (function () {
         const savedTheme = localStorage.getItem("kyu_crush_theme") || "light";
         document.documentElement.dataset.theme = savedTheme;
@@ -70,11 +123,40 @@
       gtag("js", new Date());
       gtag("config", "G-Z02Y2MPX8D");
 
-      function trackClick(linkName, linkUrl) {
+      function trackClick(linkName, linkUrl, linkMedium, linkCampaign) {
+        if (typeof gtag !== "function") return;
+
         gtag("event", "outbound_click", {
           brand: "kyu_crush",
           link_name: linkName,
-          link_url: linkUrl
+          link_url: linkUrl,
+          link_medium: linkMedium,
+          link_campaign: linkCampaign,
+          transport_type: "beacon"
+        });
+      }
+
+      function applyTrackedLinks() {
+        const links = document.querySelectorAll("[data-link-key]");
+
+        links.forEach(function (link) {
+          const key = link.dataset.linkKey;
+          const tracking = linkTracking[key];
+
+          if (!tracking) return;
+
+          const trackedUrl = buildTrackedUrl(key);
+
+          link.href = trackedUrl;
+
+          link.addEventListener("click", function () {
+            trackClick(
+              tracking.name,
+              trackedUrl,
+              tracking.medium,
+              tracking.campaign
+            );
+          });
         });
       }
 
@@ -123,8 +205,49 @@
         setTheme(currentTheme === "dark" ? "light" : "dark");
       }
 
+      function scrollToPanel(index) {
+        const shell = document.getElementById("swipeShell");
+
+        if (!shell) return;
+
+        const panels = shell.querySelectorAll(".panel");
+        const targetPanel = panels[index];
+
+        if (!targetPanel) return;
+
+        targetPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start"
+        });
+      }
+
+      function updateSwipeState() {
+        const shell = document.getElementById("swipeShell");
+        const dots = document.querySelectorAll(".pageDot");
+
+        if (!shell || !dots.length) return;
+
+        const activeIndex = shell.scrollLeft > shell.clientWidth * 0.42 ? 1 : 0;
+
+        dots.forEach(function (dot, index) {
+          dot.classList.toggle("active", index === activeIndex);
+          dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
+        });
+      }
+
       window.addEventListener("DOMContentLoaded", function () {
         setTheme(document.documentElement.dataset.theme || "light");
+        applyTrackedLinks();
+        updateSwipeState();
+
+        const shell = document.getElementById("swipeShell");
+
+        if (shell) {
+          shell.addEventListener("scroll", function () {
+            window.requestAnimationFrame(updateSwipeState);
+          });
+        }
       });
     </script>
 
@@ -203,6 +326,32 @@
         padding: 24px;
       }
 
+      .swipeShell {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 4px 0 10px;
+      }
+
+      .swipeShell::-webkit-scrollbar {
+        display: none;
+      }
+
+      .swipeTrack {
+        display: flex;
+        align-items: stretch;
+        gap: 14px;
+      }
+
+      .panel {
+        flex: 0 0 calc(100% - 42px);
+        scroll-snap-align: start;
+      }
+
       .card {
         position: relative;
         background: rgba(255, 250, 240, 0.88);
@@ -215,6 +364,21 @@
           0 12px 30px rgba(58, 36, 24, 0.11);
         backdrop-filter: blur(13px);
         -webkit-backdrop-filter: blur(13px);
+      }
+
+      .mainCard::after {
+        content: "secret 🍒";
+        position: absolute;
+        top: 50%;
+        right: -18px;
+        transform: translateY(-50%) rotate(90deg);
+        transform-origin: center;
+        color: rgba(58, 36, 24, 0.54);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        pointer-events: none;
       }
 
       .themeToggle {
@@ -339,7 +503,8 @@
       }
 
       .btn:focus-visible,
-      .themeToggle:focus-visible {
+      .themeToggle:focus-visible,
+      .pageDot:focus-visible {
         outline: 3px solid rgba(58, 36, 24, 0.90);
         outline-offset: 3px;
       }
@@ -411,11 +576,128 @@
         color: var(--choco);
       }
 
+      .snapchat {
+        background: linear-gradient(135deg, #fffc00, #ff9f7a);
+        color: var(--choco);
+      }
+
+      .secretCard {
+        padding-top: 42px;
+        background:
+          radial-gradient(circle at 18% 10%, rgba(255, 252, 0, 0.28) 0%, transparent 34%),
+          radial-gradient(circle at 88% 22%, rgba(255, 79, 163, 0.22) 0%, transparent 34%),
+          rgba(255, 250, 240, 0.90);
+      }
+
+      .secretBadge {
+        width: fit-content;
+        margin: 0 auto 16px;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        color: rgba(58, 36, 24, 0.72);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        box-shadow: 0 8px 18px rgba(58, 36, 24, 0.10);
+      }
+
+      .secretTitle {
+        margin: 0 0 10px;
+        color: var(--choco);
+        font-size: 32px;
+        line-height: 1.02;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        text-shadow:
+          2px 3px 0 rgba(255, 232, 163, 0.92),
+          -1px -1px 0 rgba(255, 255, 255, 0.85);
+      }
+
+      .secretCopy {
+        max-width: 300px;
+        margin: 0 auto 18px;
+        color: rgba(58, 36, 24, 0.66);
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 800;
+      }
+
+      .secretMini {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        max-width: 340px;
+        margin: 0 auto 14px;
+      }
+
+      .miniPill {
+        padding: 12px 10px;
+        border-radius: 17px;
+        background: rgba(255, 255, 255, 0.44);
+        border: 2px solid rgba(255, 255, 255, 0.58);
+        color: rgba(58, 36, 24, 0.70);
+        font-size: 12px;
+        font-weight: 900;
+        box-shadow: 0 8px 16px rgba(58, 36, 24, 0.08);
+      }
+
+      .secretNote {
+        max-width: 310px;
+        margin: 14px auto 0;
+        color: rgba(58, 36, 24, 0.48);
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 800;
+      }
+
       .footer {
         font-size: 12px;
         font-weight: 800;
         color: rgba(58, 36, 24, 0.46);
         margin-top: 20px;
+      }
+
+      .swipeControls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        margin: 2px auto 0;
+        color: rgba(58, 36, 24, 0.52);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .pageDots {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .pageDot {
+        width: 9px;
+        height: 9px;
+        border: 0;
+        border-radius: 999px;
+        padding: 0;
+        background: rgba(58, 36, 24, 0.25);
+        cursor: pointer;
+        transition:
+          width 0.18s ease,
+          background 0.18s ease,
+          transform 0.18s ease;
+      }
+
+      .pageDot.active {
+        width: 24px;
+        background: var(--bubblegum);
+      }
+
+      .pageDot:hover {
+        transform: scale(1.12);
       }
 
       html[data-theme="dark"] body {
@@ -455,6 +737,10 @@
           0 0 34px rgba(225, 48, 108, 0.08);
       }
 
+      html[data-theme="dark"] .mainCard::after {
+        color: rgba(255, 255, 255, 0.42);
+      }
+
       html[data-theme="dark"] .themeToggle {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.18);
@@ -470,7 +756,8 @@
           0 0 20px rgba(225, 48, 108, 0.10);
       }
 
-      html[data-theme="dark"] h1 {
+      html[data-theme="dark"] h1,
+      html[data-theme="dark"] .secretTitle {
         color: white;
         text-shadow: none;
       }
@@ -529,8 +816,49 @@
         border-color: rgba(255, 255, 255, 0.30);
       }
 
+      html[data-theme="dark"] .secretCard {
+        background:
+          radial-gradient(circle at 18% 10%, rgba(255, 252, 0, 0.13) 0%, transparent 34%),
+          radial-gradient(circle at 88% 22%, rgba(225, 48, 108, 0.18) 0%, transparent 34%),
+          rgba(14, 14, 18, 0.86);
+      }
+
+      html[data-theme="dark"] .secretBadge,
+      html[data-theme="dark"] .miniPill {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      html[data-theme="dark"] .secretCopy {
+        color: rgba(255, 255, 255, 0.66);
+      }
+
+      html[data-theme="dark"] .secretNote {
+        color: rgba(255, 255, 255, 0.42);
+      }
+
+      html[data-theme="dark"] .snapchat {
+        background: linear-gradient(135deg, #fffc00, #ffb000);
+        color: #1d1600;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+
+      html[data-theme="dark"] .swipeControls {
+        color: rgba(255, 255, 255, 0.46);
+      }
+
+      html[data-theme="dark"] .pageDot {
+        background: rgba(255, 255, 255, 0.24);
+      }
+
+      html[data-theme="dark"] .pageDot.active {
+        background: #ff8c00;
+      }
+
       html[data-theme="dark"] .btn:focus-visible,
-      html[data-theme="dark"] .themeToggle:focus-visible {
+      html[data-theme="dark"] .themeToggle:focus-visible,
+      html[data-theme="dark"] .pageDot:focus-visible {
         outline: 2px solid rgba(255, 255, 255, 0.95);
         outline-offset: 3px;
       }
@@ -542,6 +870,10 @@
 
         .wrap {
           padding: 16px;
+        }
+
+        .panel {
+          flex-basis: calc(100% - 38px);
         }
 
         .card {
@@ -559,6 +891,10 @@
           font-size: 36px;
         }
 
+        .secretTitle {
+          font-size: 29px;
+        }
+
         .bio {
           font-size: 15px;
         }
@@ -573,95 +909,165 @@
         .links {
           gap: 12px;
         }
+
+        .secretMini {
+          grid-template-columns: 1fr;
+        }
+
+        .mainCard::after {
+          right: -17px;
+          font-size: 10px;
+        }
       }
     </style>
   </head>
 
   <body>
     <main class="wrap">
-      <section class="card">
-        <button
-          class="themeToggle"
-          type="button"
-          onclick="toggleTheme()"
-          aria-label="Toggle color mode"
-        >
-          <span class="themeIcon">🌙</span>
-          <span class="themeLabel">Dark</span>
-        </button>
+      <div class="swipeShell" id="swipeShell" aria-label="Kyu Crush swipe hub">
+        <div class="swipeTrack">
+          <section class="card panel mainCard" aria-label="Main Kyu Crush links">
+            <button
+              class="themeToggle"
+              type="button"
+              onclick="toggleTheme()"
+              aria-label="Toggle color mode"
+            >
+              <span class="themeIcon">🌙</span>
+              <span class="themeLabel">Dark</span>
+            </button>
 
-        <img
-          id="profileImage"
-          class="profile"
-          src="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/lightpic.png"
-          alt="Kyu Crush profile picture"
-        />
+            <img
+              id="profileImage"
+              class="profile"
+              src="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/lightpic.png"
+              alt="Kyu Crush profile picture"
+            />
 
-        <h1>Kyu Crush</h1>
+            <h1>Kyu Crush</h1>
 
-        <p class="bio">🍒 Your daily little crush.</p>
-        <p class="trust">sunny mood • soft tease • sweet energy</p>
+            <p class="bio">🍒 Your daily little crush.</p>
+            <p class="trust">sunny mood • soft tease • sweet energy</p>
 
-        <div class="links">
-          <a
-            href="https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS"
-            class="btn mainProfile"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open featured Kyu Crush video"
-            onclick="trackClick('featured_video', 'https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS')"
-          >
-            <span class="btnText">
-              <span class="btnTitle">Watch Kyu Crush 🍒</span>
-              <span class="btnSub">featured video</span>
-            </span>
-          </a>
+            <div class="links">
+              <a
+                href="https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS"
+                class="btn mainProfile"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open featured Kyu Crush video"
+                data-link-key="featuredVideo"
+              >
+                <span class="btnText">
+                  <span class="btnTitle">Watch Kyu Crush 🍒</span>
+                  <span class="btnSub">featured video</span>
+                </span>
+              </a>
 
-          <a
-            href="https://www.instagram.com/kyu_crush/"
-            class="btn instagram"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Instagram"
-            onclick="trackClick('instagram', 'https://www.instagram.com/kyu_crush/')"
-          >
-            <span class="btnText">
-              <span class="btnTitle">Instagram ☀️</span>
-              <span class="btnSub">daily glow</span>
-            </span>
-          </a>
+              <a
+                href="https://www.instagram.com/kyu_crush/"
+                class="btn instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Instagram"
+                data-link-key="instagram"
+              >
+                <span class="btnText">
+                  <span class="btnTitle">Instagram ☀️</span>
+                  <span class="btnSub">daily glow</span>
+                </span>
+              </a>
 
-          <a
-            href="https://x.com/kyu_crush"
-            class="btn twitter"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open X"
-            onclick="trackClick('x', 'https://x.com/kyu_crush')"
-          >
-            <span class="btnText">
-              <span class="btnTitle">X / Twitter 💬</span>
-              <span class="btnSub">teasers & updates</span>
-            </span>
-          </a>
+              <a
+                href="https://x.com/kyu_crush"
+                class="btn twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open X"
+                data-link-key="x"
+              >
+                <span class="btnText">
+                  <span class="btnTitle">X / Twitter 💬</span>
+                  <span class="btnSub">teasers & updates</span>
+                </span>
+              </a>
 
-          <a
-            href="https://t.me/YOUR_NEW_HANDLE"
-            class="btn telegram"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Telegram"
-            onclick="trackClick('telegram', 'https://t.me/kyu_crush')"
-          >
-            <span class="btnText">
-              <span class="btnTitle">Telegram 🔒</span>
-              <span class="btnSub">closer updates</span>
-            </span>
-          </a>
+              <a
+                href="https://t.me/YOUR_NEW_HANDLE"
+                class="btn telegram"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Telegram"
+                data-link-key="telegram"
+              >
+                <span class="btnText">
+                  <span class="btnTitle">Telegram 🔒</span>
+                  <span class="btnSub">private updates</span>
+                </span>
+              </a>
+            </div>
+
+            <p class="footer">Kyu Crush Hub</p>
+          </section>
+
+          <section class="card panel secretCard" aria-label="Secret Kyu Crush area">
+            <div class="secretBadge">hidden side</div>
+
+            <h2 class="secretTitle">Secret Crush Area 🍒</h2>
+
+            <p class="secretCopy">
+              You found the side door. Quick snaps, softer chaos, small updates.
+            </p>
+
+            <div class="secretMini">
+              <div class="miniPill">👻 Snapchat</div>
+              <div class="miniPill">🍒 Hidden updates</div>
+            </div>
+
+            <div class="links">
+              <a
+                href="https://www.snapchat.com/add/kyuxtx?share_id=HX8_dVJONOk&locale=en-GB"
+                class="btn snapchat"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Snapchat"
+                data-link-key="snapchat"
+              >
+                <span class="btnText">
+                  <span class="btnTitle">Add me on Snapchat 👻</span>
+                  <span class="btnSub">secret little crush</span>
+                </span>
+              </a>
+            </div>
+
+            <p class="secretNote">
+              Tiny secret area. Not a casino coupon graveyard. Just the good door.
+            </p>
+
+            <p class="footer">Swipe back for main links</p>
+          </section>
         </div>
+      </div>
 
-        <p class="footer">Kyu Crush Hub</p>
-      </section>
+      <div class="swipeControls" aria-label="Swipe navigation">
+        <div class="pageDots">
+          <button
+            class="pageDot active"
+            type="button"
+            onclick="scrollToPanel(0)"
+            aria-label="Show main links"
+            aria-current="true"
+          ></button>
+          <button
+            class="pageDot"
+            type="button"
+            onclick="scrollToPanel(1)"
+            aria-label="Show secret area"
+            aria-current="false"
+          ></button>
+        </div>
+        <span>Swipe right for secret 🍒</span>
+      </div>
     </main>
   </body>
 </html>
