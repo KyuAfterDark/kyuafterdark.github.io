@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Kyu Crush: bright pop hub metadata -->
     <meta
       name="description"
       content="Kyu Crush — main links, daily glow, teasers, socials, secret snaps, and closer updates."
@@ -51,7 +50,7 @@
           "https://xhamster.com/videos/blond-twink-filled-in-a-forest-lookout-xhKO3DS",
         instagram: "https://www.instagram.com/kyu_crush/",
         x: "https://x.com/kyu_crush",
-        telegram: "https://t.me/kyu_crush",
+        telegram: "https://t.me/YOUR_NEW_HANDLE",
         snapchat:
           "https://www.snapchat.com/add/kyuxtx?share_id=HX8_dVJONOk&locale=en-GB"
       };
@@ -324,6 +323,7 @@
         width: 100%;
         max-width: 430px;
         padding: 24px;
+        overflow: visible;
       }
 
       .swipeShell {
@@ -334,7 +334,11 @@
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 4px 0 10px;
+        padding: 14px 0 44px;
+        margin: -14px 0 -36px;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
       }
 
       .swipeShell::-webkit-scrollbar {
@@ -345,6 +349,8 @@
         display: flex;
         align-items: stretch;
         gap: 14px;
+        padding: 0 0 6px;
+        background: transparent;
       }
 
       .panel {
@@ -661,11 +667,13 @@
       }
 
       .swipeControls {
+        position: relative;
+        z-index: 4;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 9px;
-        margin: 2px auto 0;
+        margin: 8px auto 0;
         color: rgba(58, 36, 24, 0.52);
         font-size: 12px;
         font-weight: 900;
@@ -870,6 +878,11 @@
 
         .wrap {
           padding: 16px;
+        }
+
+        .swipeShell {
+          padding: 14px 0 42px;
+          margin: -14px 0 -34px;
         }
 
         .panel {
