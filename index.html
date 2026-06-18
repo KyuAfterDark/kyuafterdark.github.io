@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/favicon.png"
+      content="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/Kyu.png"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -24,7 +24,7 @@
     <meta name="twitter:description" content="🍒 Your daily little crush." />
     <meta
       name="twitter:image"
-      content="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/favicon.png"
+      content="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/Kyu.png"
     />
 
     <link rel="canonical" href="https://kyu-crush.github.io/" />
@@ -34,15 +34,15 @@
     <link
       rel="icon"
       type="image/png"
-      href="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/favicon.png"
+      href="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/Kyu.png"
     />
 
     <script>
       const profilePictures = {
         light:
-          "https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/1x1_lightpic.jpg",
+          "https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/lightpic.png",
         dark:
-          "https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/1x1_darkpic.jpg"
+          "https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/darkpic.png"
       };
 
       const baseLinks = {
@@ -88,6 +88,12 @@
         }
       };
 
+      let secretAreaTracked = false;
+      let swipeAttemptTracked = false;
+      let currentTrackedTheme = null;
+      let themeStartedAt = Date.now();
+      let themeLastSentAt = Date.now();
+
       function buildTrackedUrl(key) {
         const baseUrl = baseLinks[key];
         const tracking = linkTracking[key];
@@ -122,17 +128,98 @@
       gtag("js", new Date());
       gtag("config", "G-Z02Y2MPX8D");
 
-      function trackClick(linkName, linkUrl, linkMedium, linkCampaign) {
+      function trackEvent(eventName, eventParams) {
         if (typeof gtag !== "function") return;
 
-        gtag("event", "outbound_click", {
+        gtag("event", eventName, {
           brand: "kyu_crush",
+          transport_type: "beacon",
+          ...eventParams
+        });
+      }
+
+      function trackLinkClick(linkName, linkUrl, linkMedium, linkCampaign) {
+        trackEvent("outbound_click", {
           link_name: linkName,
           link_url: linkUrl,
           link_medium: linkMedium,
-          link_campaign: linkCampaign,
-          transport_type: "beacon"
+          link_campaign: linkCampaign
         });
+
+        if (linkName === "snapchat") {
+          trackEvent("secret_snapchat_click", {
+            link_name: linkName,
+            link_url: linkUrl,
+            link_medium: linkMedium,
+            link_campaign: linkCampaign,
+            area_name: "secret_crush_area"
+          });
+        }
+      }
+
+      function trackSecretAreaView() {
+        if (secretAreaTracked) return;
+
+        secretAreaTracked = true;
+
+        trackEvent("secret_area_view", {
+          area_name: "secret_crush_area",
+          discovery_method: "horizontal_swipe"
+        });
+      }
+
+      function trackSwipeAttempt(scrollLeft) {
+        if (swipeAttemptTracked || scrollLeft < 18) return;
+
+        swipeAttemptTracked = true;
+
+        trackEvent("swipe_attempt", {
+          direction: "right",
+          component_name: "secret_swipe_hub"
+        });
+      }
+
+      function trackThemeView(theme) {
+        trackEvent("theme_view", {
+          theme: theme
+        });
+      }
+
+      function trackThemeChange(fromTheme, toTheme) {
+        trackEvent("theme_change", {
+          from_theme: fromTheme,
+          to_theme: toTheme
+        });
+      }
+
+      function trackThemeTime(reason) {
+        if (!currentTrackedTheme) return;
+
+        const now = Date.now();
+        const durationSeconds = Math.round((now - themeLastSentAt) / 1000);
+
+        if (durationSeconds < 2) return;
+
+        trackEvent("theme_time", {
+          theme: currentTrackedTheme,
+          duration_seconds: durationSeconds,
+          reason: reason
+        });
+
+        themeLastSentAt = now;
+      }
+
+      function resetThemeTimer(theme) {
+        const now = Date.now();
+
+        currentTrackedTheme = theme;
+        themeStartedAt = now;
+        themeLastSentAt = now;
+      }
+
+      function initializeThemeTracking(theme) {
+        resetThemeTimer(theme);
+        trackThemeView(theme);
       }
 
       function applyTrackedLinks() {
@@ -149,13 +236,53 @@
           link.href = trackedUrl;
 
           link.addEventListener("click", function () {
-            trackClick(
+            trackLinkClick(
               tracking.name,
               trackedUrl,
               tracking.medium,
               tracking.campaign
             );
           });
+        });
+      }
+
+      function setupButtonImpressionTracking() {
+        const buttons = document.querySelectorAll("[data-link-key]");
+
+        if (!("IntersectionObserver" in window)) return;
+
+        const seenButtons = new Set();
+
+        const observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
+
+              const button = entry.target;
+              const key = button.dataset.linkKey;
+              const tracking = linkTracking[key];
+
+              if (!tracking || seenButtons.has(key)) return;
+
+              seenButtons.add(key);
+
+              trackEvent("button_impression", {
+                link_name: tracking.name,
+                link_medium: tracking.medium,
+                link_campaign: tracking.campaign,
+                link_content: tracking.content
+              });
+
+              observer.unobserve(button);
+            });
+          },
+          {
+            threshold: [0.55]
+          }
+        );
+
+        buttons.forEach(function (button) {
+          observer.observe(button);
         });
       }
 
@@ -179,7 +306,16 @@
           theme === "dark" ? profilePictures.dark : profilePictures.light;
       }
 
-      function setTheme(theme) {
+      function setTheme(theme, options = {}) {
+        const previousTheme = document.documentElement.dataset.theme || "light";
+        const shouldTrackChange = options.trackChange === true;
+
+        if (shouldTrackChange && previousTheme !== theme) {
+          trackThemeTime("theme_change");
+          trackThemeChange(previousTheme, theme);
+          resetThemeTimer(theme);
+        }
+
         document.documentElement.dataset.theme = theme;
         localStorage.setItem("kyu_crush_theme", theme);
         updateThemeMeta(theme);
@@ -201,7 +337,11 @@
 
       function toggleTheme() {
         const currentTheme = document.documentElement.dataset.theme || "light";
-        setTheme(currentTheme === "dark" ? "light" : "dark");
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+
+        setTheme(nextTheme, {
+          trackChange: true
+        });
       }
 
       function scrollToPanel(index) {
@@ -229,6 +369,12 @@
 
         const activeIndex = shell.scrollLeft > shell.clientWidth * 0.42 ? 1 : 0;
 
+        trackSwipeAttempt(shell.scrollLeft);
+
+        if (activeIndex === 1) {
+          trackSecretAreaView();
+        }
+
         dots.forEach(function (dot, index) {
           dot.classList.toggle("active", index === activeIndex);
           dot.setAttribute(
@@ -239,8 +385,15 @@
       }
 
       window.addEventListener("DOMContentLoaded", function () {
-        setTheme(document.documentElement.dataset.theme || "light");
+        const initialTheme = document.documentElement.dataset.theme || "light";
+
+        setTheme(initialTheme, {
+          trackChange: false
+        });
+
+        initializeThemeTracking(initialTheme);
         applyTrackedLinks();
+        setupButtonImpressionTracking();
         updateSwipeState();
 
         const shell = document.getElementById("swipeShell");
@@ -250,6 +403,20 @@
             window.requestAnimationFrame(updateSwipeState);
           });
         }
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden") {
+          trackThemeTime("visibility_hidden");
+        }
+
+        if (document.visibilityState === "visible") {
+          themeLastSentAt = Date.now();
+        }
+      });
+
+      window.addEventListener("beforeunload", function () {
+        trackThemeTime("beforeunload");
       });
     </script>
 
@@ -932,7 +1099,7 @@
             <img
               id="profileImage"
               class="profile"
-              src="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/1x1_lightpic.jpg"
+              src="https://raw.githubusercontent.com/kyu-crush/kyu-crush.github.io/main/lightpic.png"
               alt="Kyu Crush profile picture"
             />
 
@@ -1062,4 +1229,4 @@
       </div>
     </main>
   </body>
-</html>
+      </html>
