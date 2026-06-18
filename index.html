@@ -30,6 +30,33 @@
     <script>
       const GA_MEASUREMENT_ID = "G-Z02Y2MPX8D";
       const CONSENT_STORAGE_KEY = "kyu_crush_analytics_consent";
+      const THEME_STORAGE_KEY = "kyu_crush_theme";
+
+      const memoryStorageFallback = {};
+
+      function safeGetItem(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (error) {
+          return memoryStorageFallback[key] || null;
+        }
+      }
+
+      function safeSetItem(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+        } catch (error) {
+          memoryStorageFallback[key] = String(value);
+        }
+      }
+
+      function safeRemoveItem(key) {
+        try {
+          window.localStorage.removeItem(key);
+        } catch (error) {
+          delete memoryStorageFallback[key];
+        }
+      }
 
       const profilePictures = {
         light: "1x1_lightpic.jpg",
@@ -128,11 +155,11 @@
       }
 
       function getAnalyticsConsent() {
-        return localStorage.getItem(CONSENT_STORAGE_KEY);
+        return safeGetItem(CONSENT_STORAGE_KEY);
       }
 
       function setAnalyticsConsent(value) {
-        localStorage.setItem(CONSENT_STORAGE_KEY, value);
+        safeSetItem(CONSENT_STORAGE_KEY, value);
       }
 
       function acceptAnalytics() {
@@ -156,6 +183,11 @@
         analyticsEnabled = false;
       }
 
+      function resetAnalyticsConsent() {
+        safeRemoveItem(CONSENT_STORAGE_KEY);
+        showCookieBannerIfNeeded();
+      }
+
       function showCookieBannerIfNeeded() {
         const consent = getAnalyticsConsent();
         const banner = document.getElementById("cookieBanner");
@@ -163,17 +195,18 @@
         if (!banner) return;
 
         if (consent === "accepted") {
-          banner.hidden = true;
+          hideCookieBanner();
           loadGoogleAnalytics();
           return;
         }
 
         if (consent === "rejected") {
-          banner.hidden = true;
+          hideCookieBanner();
           return;
         }
 
         banner.hidden = false;
+        banner.removeAttribute("hidden");
       }
 
       function hideCookieBanner() {
@@ -182,6 +215,7 @@
         if (!banner) return;
 
         banner.hidden = true;
+        banner.setAttribute("hidden", "");
       }
 
       function trackEvent(eventName, eventParams = {}) {
@@ -375,7 +409,7 @@
         }
 
         document.documentElement.dataset.theme = theme;
-        localStorage.setItem("kyu_crush_theme", theme);
+        safeSetItem(THEME_STORAGE_KEY, theme);
         updateThemeMeta(theme);
         updateProfilePicture(theme);
 
@@ -474,7 +508,7 @@
       }
 
       (function () {
-        const savedTheme = localStorage.getItem("kyu_crush_theme") || "light";
+        const savedTheme = safeGetItem(THEME_STORAGE_KEY) || "light";
         document.documentElement.dataset.theme = savedTheme;
       })();
 
@@ -1726,4 +1760,4 @@
       </div>
     </section>
   </body>
-</html>
+  </html>
