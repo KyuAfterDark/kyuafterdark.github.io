@@ -14,18 +14,12 @@
     <meta property="og:description" content="🍒 Your daily little crush." />
     <meta property="og:url" content="https://kyu-crush.github.io/" />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:image"
-      content="https://kyu-crush.github.io/1x1_lightpic.jpg"
-    />
+    <meta property="og:image" content="https://kyu-crush.github.io/1x1_lightpic.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kyu Crush" />
     <meta name="twitter:description" content="🍒 Your daily little crush." />
-    <meta
-      name="twitter:image"
-      content="https://kyu-crush.github.io/1x1_lightpic.jpg"
-    />
+    <meta name="twitter:image" content="https://kyu-crush.github.io/1x1_lightpic.jpg" />
 
     <link rel="canonical" href="https://kyu-crush.github.io/" />
 
@@ -458,7 +452,8 @@
           panel.hidden = panel.dataset.legalPanel !== panelName;
         });
 
-        legalOverlay.hidden = false;
+        legalOverlay.classList.add("isOpen");
+        legalOverlay.setAttribute("aria-hidden", "false");
         document.body.classList.add("noScroll");
       }
 
@@ -467,8 +462,15 @@
 
         if (!legalOverlay) return;
 
-        legalOverlay.hidden = true;
+        legalOverlay.classList.remove("isOpen");
+        legalOverlay.setAttribute("aria-hidden", "true");
         document.body.classList.remove("noScroll");
+      }
+
+      function handleLegalOverlayClick(event) {
+        if (event.target && event.target.id === "legalOverlay") {
+          closeLegalPanel();
+        }
       }
 
       (function () {
@@ -528,6 +530,10 @@
     <style>
       * {
         box-sizing: border-box;
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       html {
@@ -1078,11 +1084,15 @@
         z-index: 30;
         padding: 18px;
         background: rgba(0, 0, 0, 0.45);
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: center;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
+      }
+
+      .legalOverlay.isOpen {
+        display: flex;
       }
 
       .legalBox {
@@ -1592,8 +1602,8 @@
       id="legalOverlay"
       class="legalOverlay"
       aria-label="Legal information"
-      hidden
-      onclick="if (event.target === this) closeLegalPanel()"
+      aria-hidden="true"
+      onclick="handleLegalOverlayClick(event)"
     >
       <div class="legalBox" role="dialog" aria-modal="true">
         <div class="legalHeader">
