@@ -30,33 +30,6 @@
     <script>
       const GA_MEASUREMENT_ID = "G-Z02Y2MPX8D";
       const CONSENT_STORAGE_KEY = "kyu_crush_analytics_consent";
-      const THEME_STORAGE_KEY = "kyu_crush_theme";
-
-      const memoryStorageFallback = {};
-
-      function safeGetItem(key) {
-        try {
-          return window.localStorage.getItem(key);
-        } catch (error) {
-          return memoryStorageFallback[key] || null;
-        }
-      }
-
-      function safeSetItem(key, value) {
-        try {
-          window.localStorage.setItem(key, value);
-        } catch (error) {
-          memoryStorageFallback[key] = String(value);
-        }
-      }
-
-      function safeRemoveItem(key) {
-        try {
-          window.localStorage.removeItem(key);
-        } catch (error) {
-          delete memoryStorageFallback[key];
-        }
-      }
 
       const profilePictures = {
         light: "1x1_lightpic.jpg",
@@ -155,11 +128,11 @@
       }
 
       function getAnalyticsConsent() {
-        return safeGetItem(CONSENT_STORAGE_KEY);
+        return localStorage.getItem(CONSENT_STORAGE_KEY);
       }
 
       function setAnalyticsConsent(value) {
-        safeSetItem(CONSENT_STORAGE_KEY, value);
+        localStorage.setItem(CONSENT_STORAGE_KEY, value);
       }
 
       function acceptAnalytics() {
@@ -184,8 +157,11 @@
       }
 
       function resetAnalyticsConsent() {
-        safeRemoveItem(CONSENT_STORAGE_KEY);
+        localStorage.removeItem(CONSENT_STORAGE_KEY);
+        analyticsEnabled = false;
+        analyticsInitialized = false;
         showCookieBannerIfNeeded();
+        closeLegalPanel();
       }
 
       function showCookieBannerIfNeeded() {
@@ -195,18 +171,17 @@
         if (!banner) return;
 
         if (consent === "accepted") {
-          hideCookieBanner();
+          banner.hidden = true;
           loadGoogleAnalytics();
           return;
         }
 
         if (consent === "rejected") {
-          hideCookieBanner();
+          banner.hidden = true;
           return;
         }
 
         banner.hidden = false;
-        banner.removeAttribute("hidden");
       }
 
       function hideCookieBanner() {
@@ -215,7 +190,6 @@
         if (!banner) return;
 
         banner.hidden = true;
-        banner.setAttribute("hidden", "");
       }
 
       function trackEvent(eventName, eventParams = {}) {
@@ -409,7 +383,7 @@
         }
 
         document.documentElement.dataset.theme = theme;
-        safeSetItem(THEME_STORAGE_KEY, theme);
+        localStorage.setItem("kyu_crush_theme", theme);
         updateThemeMeta(theme);
         updateProfilePicture(theme);
 
@@ -508,7 +482,7 @@
       }
 
       (function () {
-        const savedTheme = safeGetItem(THEME_STORAGE_KEY) || "light";
+        const savedTheme = localStorage.getItem("kyu_crush_theme") || "light";
         document.documentElement.dataset.theme = savedTheme;
       })();
 
@@ -827,7 +801,8 @@
       .pageDot:focus-visible,
       .legalButton:focus-visible,
       .cookieButton:focus-visible,
-      .legalClose:focus-visible {
+      .legalClose:focus-visible,
+      .inlineLegalAction:focus-visible {
         outline: 3px solid rgba(58, 36, 24, 0.90);
         outline-offset: 3px;
       }
@@ -1188,7 +1163,18 @@
         padding-left: 18px;
       }
 
-      .placeholderWarning {
+      .inlineLegalAction {
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 13px;
+        background: rgba(58, 36, 24, 0.10);
+        color: rgba(58, 36, 24, 0.84);
+        font-size: 12px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .legalNotice {
         padding: 12px;
         border-radius: 16px;
         background: rgba(255, 59, 95, 0.10);
@@ -1364,12 +1350,13 @@
       }
 
       html[data-theme="dark"] .cookieReject,
-      html[data-theme="dark"] .legalClose {
+      html[data-theme="dark"] .legalClose,
+      html[data-theme="dark"] .inlineLegalAction {
         background: rgba(255, 255, 255, 0.10);
         color: white;
       }
 
-      html[data-theme="dark"] .placeholderWarning {
+      html[data-theme="dark"] .legalNotice {
         background: rgba(255, 59, 95, 0.14);
         border-color: rgba(255, 59, 95, 0.26);
         color: rgba(255, 255, 255, 0.86);
@@ -1380,7 +1367,8 @@
       html[data-theme="dark"] .pageDot:focus-visible,
       html[data-theme="dark"] .legalButton:focus-visible,
       html[data-theme="dark"] .cookieButton:focus-visible,
-      html[data-theme="dark"] .legalClose:focus-visible {
+      html[data-theme="dark"] .legalClose:focus-visible,
+      html[data-theme="dark"] .inlineLegalAction:focus-visible {
         outline: 2px solid rgba(255, 255, 255, 0.95);
         outline-offset: 3px;
       }
@@ -1648,54 +1636,58 @@
         </div>
 
         <article class="legalPanel legalContent" data-legal-panel="imprint" hidden>
-          <h3>Imprint</h3>
+          <h3>Impressum</h3>
 
-          <p class="placeholderWarning">
-            Replace this placeholder before publishing seriously. A fake imprint is worse than no makeup on a corpse.
+          <p>
+            Inhalte gemäß § 5 DDG
           </p>
 
           <p>
-            Information according to § 5 DDG:
+            Ekkarat Huayyai<br />
+            c/o IP-Management #10769<br />
+            Ludwig-Erhard-Straße 18<br />
+            20459 Hamburg<br />
+            Deutschland
           </p>
 
+          <h3>Kontaktdaten</h3>
           <p>
-            YOUR LEGAL NAME<br />
-            YOUR STREET AND HOUSE NUMBER<br />
-            YOUR ZIP CODE AND CITY<br />
-            Germany
+            E-Mail: kyu.crush.hub@gmail.com<br />
+            Telefon: 1785807915
           </p>
 
-          <h3>Contact</h3>
+          <h3>Redaktionell verantwortlich</h3>
           <p>
-            Email: YOUR EMAIL ADDRESS<br />
-            Optional phone: YOUR PHONE NUMBER
+            Ekkarat Huayyai
           </p>
 
-          <h3>Responsibility for content</h3>
+          <h3>Quelle</h3>
           <p>
-            Responsible person: YOUR LEGAL NAME
+            Impressum-Privatschutz
           </p>
 
-          <h3>Note</h3>
+          <h3>Hinweis</h3>
           <p>
-            This page is a personal creator hub. Some outgoing links may lead to adult content.
-            Access is intended for adults only.
+            Diese Website ist ein Creator-Linkhub. Einige ausgehende Links können Inhalte für Erwachsene enthalten.
+            Nutzung nur ab 18 Jahren.
           </p>
         </article>
 
         <article class="legalPanel legalContent" data-legal-panel="privacy" hidden>
-          <h3>Privacy Policy</h3>
+          <h3>Privacy Policy / Datenschutzhinweis</h3>
 
-          <p class="placeholderWarning">
-            Replace this placeholder with a proper privacy policy before relying on it.
+          <p class="legalNotice">
+            Dieser Datenschutztext ist vorläufig. Das DSGVO-Snippet von Impressum-Privatschutz sollte noch ergänzt werden.
           </p>
 
-          <h3>Controller</h3>
+          <h3>Controller / Verantwortlicher</h3>
           <p>
-            YOUR LEGAL NAME<br />
-            YOUR STREET AND HOUSE NUMBER<br />
-            YOUR ZIP CODE AND CITY<br />
-            Email: YOUR EMAIL ADDRESS
+            Ekkarat Huayyai<br />
+            c/o IP-Management #10769<br />
+            Ludwig-Erhard-Straße 18<br />
+            20459 Hamburg<br />
+            Deutschland<br />
+            E-Mail: kyu.crush.hub@gmail.com
           </p>
 
           <h3>Hosting</h3>
@@ -1733,6 +1725,12 @@
             Your choice is stored in local storage on your device.
           </p>
 
+          <p>
+            <button class="inlineLegalAction" type="button" onclick="resetAnalyticsConsent()">
+              Change analytics choice
+            </button>
+          </p>
+
           <h3>Local storage</h3>
           <p>
             This website stores your theme choice and analytics consent choice locally in your browser.
@@ -1760,4 +1758,4 @@
       </div>
     </section>
   </body>
-</html>
+  </html>
